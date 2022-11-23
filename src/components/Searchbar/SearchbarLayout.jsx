@@ -1,8 +1,8 @@
 import { ReactComponent as SearchLogo } from '../../images/searchLogo.svg';
-export const SearchbarLayout = ({handleSubmit, state, changeSearchQuery}) => {
+export const SearchbarLayout = ({onSubmit, searchQuery, changeSearchQuery}) => {
     return (
         <header className="searchbar">
-        <form className="searchForm" onSubmit={handleSubmit}>
+        <form className="searchForm" onSubmit={onSubmit}>
           <button type="submit" className="searchForm-button">
             <SearchLogo />
           </button>
@@ -13,7 +13,7 @@ export const SearchbarLayout = ({handleSubmit, state, changeSearchQuery}) => {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            value={state}
+            value={searchQuery}
             onChange={changeSearchQuery}
           />
         </form>

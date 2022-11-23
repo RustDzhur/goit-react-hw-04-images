@@ -1,24 +1,16 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'components/Modal/Modal';
 
-export class ImageGalleryItem extends Component {
-  state = {
-    isOpenModal: false,
-    idx: 0,
-  };
+export function ImageGalleryItem ({searchResult}) {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [idx, setIdx] = useState(0)
 
   //тоглим стейт для открытия и закрытия модалки + записываем ID
-  handleModal = id => {
-    this.setState(({ isOpenModal }) => ({
-      isOpenModal: !isOpenModal,
-      idx: id,
-    }));
+  const handleModal = id => {
+    setIsOpenModal(!isOpenModal);
+    setIdx(id)
   };
-
-  render() {
-    const { searchResult } = this.props;
-    const { isOpenModal, idx } = this.state;
 
     return (
       <>
@@ -26,7 +18,7 @@ export class ImageGalleryItem extends Component {
           <li
             key={id}
             className="gallery-item"
-            onClick={() => this.handleModal(id)}
+            onClick={() => handleModal(id)}
           >
             <img
               src={webformatURL}
@@ -37,7 +29,7 @@ export class ImageGalleryItem extends Component {
               <Modal
                 largeImageURL={largeImageURL}
                 tags={tags}
-                toggleModal={this.handleModal}
+                toggleModal={handleModal}
               />
             )}
           </li>
@@ -45,7 +37,6 @@ export class ImageGalleryItem extends Component {
       </>
     );
   }
-}
 
 ImageGalleryItem.propTypes = {
   isOpenModal: PropTypes.bool,

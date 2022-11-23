@@ -1,46 +1,40 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-
 import { SearchbarLayout } from './SearchbarLayout';
 
-export class Searchbar extends Component {
-  state = {
-    searchQuery: '',
-  };
+export function Searchbar({ onSubmit }) {
+  const [searchQuery, setSearchQuery] = useState('');
 
-  changeSearchQuery = e => {
+  const changeSearchQuery = e => {
     const search = e.currentTarget.value;
-    this.setState({ searchQuery: search });
+    setSearchQuery(search);
   };
 
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (this.state.searchQuery === '') {
+    if (searchQuery === '') {
       toast.info('Enter Search Query pleese!!!');
     } else {
-      this.props.onSubmit(this.state.searchQuery);
-      this.resetSearchForm();
+      onSubmit(searchQuery);
+      resetSearchForm();
     }
   };
 
-  resetSearchForm = () => {
-    this.setState({ searchQuery: '' });
+  const resetSearchForm = () => {
+    setSearchQuery('');
   };
 
-  render() {
-    return (
-      <SearchbarLayout
-        handleSubmit={this.handleSubmit}
-        changeSearchQuery={this.changeSearchQuery}
-        state={this.state.searchQuery}
-      />
-    );
-  }
+  return (
+    <SearchbarLayout
+      onSubmit={handleSubmit}
+      changeSearchQuery={changeSearchQuery}
+      searchQuery={searchQuery}
+    />
+  );
 }
-
 
 Searchbar.propTypes = {
   searchQuery: PropTypes.string,
-  search: PropTypes.string
-}
+  search: PropTypes.string,
+};
